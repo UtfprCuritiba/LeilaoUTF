@@ -5,21 +5,33 @@
  */
 package leilaoutf.rn;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 import leilaoutf.model.Leilao;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Lucas
  */
-public class Servidor {
+public class Servidor{
     
     public Servidor(){
         
     }
     
-    public void infoServerAtivo(){
-        
+    public void infoServerAtivo(MulticastSocket s, InetAddress group){
+        String m = "Servidor ativo!";
+        DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), group, 6789);
+        try {
+            s.send(messageOut);
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public Leilao enviarInfoLeilao(){
@@ -35,7 +47,7 @@ public class Servidor {
         
     }
     
-    public String enviarChaver(){
+    public String enviarChaves(){
         return "ChaveRSA";
     }
     
