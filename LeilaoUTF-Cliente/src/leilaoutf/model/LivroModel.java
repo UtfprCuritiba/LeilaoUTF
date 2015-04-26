@@ -6,26 +6,33 @@
 package leilaoutf.model;
 
 /**
- *
+ * Atenção: Essa classe não deve ser acessada diretamente por outras classes, além da classe livro.
+ * Todas as outras classes, só devem manipular o LivroModel através da classe Livro.
  * @author Lucas
  */
-public class Livro {
+public class LivroModel {
     
-    private int codigo;
+    private String codigo;
     private String nome;
     private String descricao;
 
+    public LivroModel(String cod, String n, String desc){
+        codigo = cod;
+        nome = n;
+        descricao = desc;
+    }
+    
     /**
      * @return the codigo
      */
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
     /**
      * @param codigo the codigo to set
      */
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

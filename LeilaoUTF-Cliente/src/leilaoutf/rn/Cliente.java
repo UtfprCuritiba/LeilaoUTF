@@ -15,8 +15,8 @@ public class Cliente {
         
     }
     
-    public void novoLeilao(){
-        
+    public void novoLeilao(Leilao leilao){
+        //Esta função deve serializar o objeto leilão e enviar ao servidor.
     }
     
     public void finalizarLeilao(){

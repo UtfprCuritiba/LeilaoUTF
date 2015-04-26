@@ -5,6 +5,8 @@
  */
 package leilaoutf.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mayko
@@ -42,8 +44,18 @@ public class ClienteView extends javax.swing.JFrame {
         jLabel1.setText("Leilão UTFR");
 
         criarLeilao.setText("Criar Leilão");
+        criarLeilao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                criarLeilaoActionPerformed(evt);
+            }
+        });
 
         participarLeilao.setText("Participar de um Leilão");
+        participarLeilao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                participarLeilaoActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Seja bem-vindo ao sistema de leilão de livros da UTFPR");
 
@@ -76,7 +88,7 @@ public class ClienteView extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(criarLeilao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(participarLeilao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(sair, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(jLabel1)))
@@ -108,8 +120,23 @@ public class ClienteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        // TODO add your handling code here:
+        String msg = "Obrigado por usar nosso sistema. Desenvolvido por: @lucasmelocvl e @maykooliver.";
+        JOptionPane.showMessageDialog(null, msg);
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_sairActionPerformed
+
+    private void participarLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarLeilaoActionPerformed
+        this.setVisible(false);
+        this.dispose();
+        new ParticiparLeilaoView().setVisible(true);
+    }//GEN-LAST:event_participarLeilaoActionPerformed
+
+    private void criarLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLeilaoActionPerformed
+        this.setVisible(false);
+        this.dispose();
+        new CriarLeilaoView().setVisible(true);
+    }//GEN-LAST:event_criarLeilaoActionPerformed
 
     /**
      * @param args the command line arguments

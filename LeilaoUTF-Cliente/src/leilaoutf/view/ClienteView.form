@@ -41,7 +41,7 @@
                           <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
                               <Component id="criarLeilao" max="32767" attributes="0"/>
                               <Component id="participarLeilao" alignment="0" max="32767" attributes="0"/>
-                              <Component id="sair" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                              <Component id="sair" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -91,11 +91,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Criar Leil&#xe3;o"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="criarLeilaoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="participarLeilao">
       <Properties>
         <Property name="text" type="java.lang.String" value="Participar de um Leil&#xe3;o"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="participarLeilaoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>

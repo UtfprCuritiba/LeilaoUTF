@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import leilaoutf.model.Leilao;
+import leilaoutf.model.LeilaoModel;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,8 +46,8 @@ public class Servidor implements Runnable{
         }
     }
     
-    public Leilao enviarInfoLeilao(){
-        Leilao leilao = new Leilao();
+    public LeilaoModel enviarInfoLeilao(){
+        LeilaoModel leilao = new LeilaoModel();
         return leilao;
     }
     

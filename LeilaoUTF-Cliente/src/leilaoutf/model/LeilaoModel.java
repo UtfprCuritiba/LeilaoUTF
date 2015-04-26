@@ -5,30 +5,45 @@
  */
 package leilaoutf.model;
 
-import java.util.Date;
+import java.time.LocalDate;
+import leilaoutf.rn.Livro;
 
 /**
- *
+ * Atenção: Essa classe não deve ser acessada diretamente por outras classes, além da classe Leilao.
+ * Todas as outras classes, só podem manipular o LeilaoModel através da classe Leilao.
  * @author Lucas
  */
-public class Leilao {
+public class LeilaoModel {
     
     private Livro livro;
     private double precoInicial;
-    private Date tempoLimite;
+    private LocalDate tempoLimite;
     private boolean finalizado;
     private String nomeVencedor;
     private double precoFinal;
+    
+    public LeilaoModel(){
+        
+    }
+    
+    public LeilaoModel(Livro l, double preco, LocalDate date){
+        livro = l;
+        precoInicial = preco;
+        tempoLimite = date;
+        finalizado = false;
+        nomeVencedor = null;
+        precoFinal = 0;
+    }
 
     /**
      * @return the livro
      */
-    public Livro getLivro() {
+    public Livro getCodlivro() {
         return livro;
     }
 
     /**
-     * @param livro the livro to set
+     * @param livro
      */
     public void setLivro(Livro livro) {
         this.livro = livro;
@@ -51,14 +66,14 @@ public class Leilao {
     /**
      * @return the tempoLimite
      */
-    public Date getTempoLimite() {
+    public LocalDate getTempoLimite() {
         return tempoLimite;
     }
 
     /**
      * @param tempoLimite the tempoLimite to set
      */
-    public void setTempoLimite(Date tempoLimite) {
+    public void setTempoLimite(LocalDate tempoLimite) {
         this.tempoLimite = tempoLimite;
     }
 

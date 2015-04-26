@@ -5,14 +5,22 @@
  */
 package leilaoutf.rn;
 
+import leilaoutf.model.LivroModel;
+
 /**
  *
  * @author Lucas
  */
 public class Livro {
     
-    public void novoLivo(int codigo, String nome, String descricao){
-        
+    LivroModel livro;
+    
+    public Livro(String codigo, String nome, String descricao){
+        this.livro = new LivroModel(codigo, nome, descricao);
+    }
+    
+    public LivroModel getLivro(){
+        return livro;
     }
     
 }

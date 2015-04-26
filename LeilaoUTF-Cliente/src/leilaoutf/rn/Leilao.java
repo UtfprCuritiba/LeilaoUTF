@@ -5,8 +5,8 @@
  */
 package leilaoutf.rn;
 
-import java.util.Date;
-import leilaoutf.model.Livro;
+import java.time.LocalDate;
+import leilaoutf.model.LeilaoModel;
 
 /**
  *
@@ -14,8 +14,12 @@ import leilaoutf.model.Livro;
  */
 public class Leilao {
     
-    public void novoLeilao(Livro livro, double precoInicial, Date tempoLimite, boolean finalizado, String nomeVencedor, double precoFinal){
-        
+    LeilaoModel leilao;
+    
+    public void criarLeilao(String codigoLivro, String nomeLivro, String descricaoLivro, Double precoInicial, LocalDate expiracaoLeilao){
+        Livro livro = new Livro(codigoLivro, nomeLivro, descricaoLivro);
+        this.leilao = new LeilaoModel(livro, precoInicial, expiracaoLeilao);
+        System.out.println("Leilão criado com sucesso!");
     }
     
     public void novoLance(double lance){

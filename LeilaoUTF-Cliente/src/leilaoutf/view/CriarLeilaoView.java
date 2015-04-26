@@ -5,6 +5,12 @@
  */
 package leilaoutf.view;
 
+import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
+import leilaoutf.rn.Cliente;
+import leilaoutf.rn.Leilao;
+
 /**
  *
  * @author Mayko
@@ -39,10 +45,11 @@ public class CriarLeilaoView extends javax.swing.JFrame {
         descricaoLivro = new javax.swing.JTextArea();
         criarLeilao = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        precoInicial = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        tempoLeilao = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
+        precoInicial = new javax.swing.JFormattedTextField();
+        tempoLeilao = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -78,13 +85,17 @@ public class CriarLeilaoView extends javax.swing.JFrame {
 
         jLabel5.setText("Preço:");
 
-        jLabel6.setText("Templo leilão:");
+        jLabel6.setText("Data de expiração do leilão:");
 
-        tempoLeilao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tempoLeilaoActionPerformed(evt);
-            }
-        });
+        try {
+            precoInicial.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        tempoLeilao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+
+        jLabel7.setText("yyyy-MM-dd");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,29 +105,31 @@ public class CriarLeilaoView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(precoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tempoLeilao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(codLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(nomeLivro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(jScrollPane2)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1)
-                            .addComponent(criarLeilao, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(codLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1)
+                                    .addComponent(criarLeilao, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5))
+                                .addGap(57, 57, 57))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(precoInicial)
+                                .addGap(48, 48, 48)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tempoLeilao, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3)
+                            .addComponent(nomeLivro, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addComponent(jSeparator1)
         );
         layout.setVerticalGroup(
@@ -139,13 +152,14 @@ public class CriarLeilaoView extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(precoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tempoLeilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tempoLeilao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7)))
+                    .addComponent(precoInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -162,12 +176,35 @@ public class CriarLeilaoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeLivroActionPerformed
 
-    private void tempoLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tempoLeilaoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tempoLeilaoActionPerformed
-
     private void criarLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarLeilaoActionPerformed
-        // TODO add your handling code here:
+        String codigo = codLivro.getText();
+        String nome = nomeLivro.getText();
+        String descricao = descricaoLivro.getText();
+        String precoInic = precoInicial.getText();
+        String data = tempoLeilao.getText();
+        Double preco = null;
+        LocalDate expiracaoLeilao = null;
+        
+        if(codigo.equals("") || nome.equals("") || descricao.equals("") ||
+                precoInic.equals("   .  ") || data.equals(""))
+        {
+            String msg = "Por favor, preencha todos os campos.";
+            JOptionPane.showMessageDialog(null, msg);
+        }
+        else{
+            try{
+                preco = Double.parseDouble(precoInic);
+                expiracaoLeilao = LocalDate.parse(data);
+            }catch(Exception e){
+                System.out.println("Exception:" + e);
+            }
+            Leilao leilao = new Leilao();
+            leilao.criarLeilao(codigo, nome, descricao, preco, expiracaoLeilao);
+            Cliente cliente = new Cliente();
+            cliente.novoLeilao(leilao);
+            this.setVisible(false);
+            this.dispose();
+        }
     }//GEN-LAST:event_criarLeilaoActionPerformed
 
     /**
@@ -218,12 +255,13 @@ public class CriarLeilaoView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField nomeLivro;
-    private javax.swing.JTextField precoInicial;
-    private javax.swing.JTextField tempoLeilao;
+    private javax.swing.JFormattedTextField precoInicial;
+    private javax.swing.JFormattedTextField tempoLeilao;
     // End of variables declaration//GEN-END:variables
 }
