@@ -23,7 +23,7 @@ public class LeilaoUTFCliente {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // TODO code application logic here
         System.out.println("Olá mundo");
         
@@ -41,8 +41,10 @@ public class LeilaoUTFCliente {
         }
         
         //Envia mensagem
-        Servidor serv = new Servidor();
-        serv.infoServerAtivo(s, group);
+        Servidor serv = new Servidor(s, group);
+        Thread servThread = new Thread(serv);
+        servThread.start();
+        servThread.sleep(3 * 1000);
         
         //Recebe mensagem
         byte[] buffer = new byte[1000];

@@ -18,13 +18,25 @@ import java.util.logging.Logger;
  *
  * @author Lucas
  */
-public class Servidor{
+public class Servidor implements Runnable{
     
-    public Servidor(){
-        
+    private MulticastSocket s;
+    private InetAddress group;
+    private boolean serverAtivo = true;
+    
+    public Servidor(MulticastSocket multiSocket, InetAddress adressGroup){
+        s = multiSocket;
+        group = adressGroup;
     }
     
-    public void infoServerAtivo(MulticastSocket s, InetAddress group){
+    @Override
+    public void run(){
+        while(serverAtivo){
+            infoServerAtivo();
+        }
+    }
+    
+    public void infoServerAtivo(){
         String m = "Servidor ativo!";
         DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), group, 6789);
         try {
