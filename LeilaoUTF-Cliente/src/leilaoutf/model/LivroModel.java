@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package leilaoutf.model;
 
 /**
+ * Classe de LivroModel.
  * Atenção: Essa classe não deve ser acessada diretamente por outras classes, além da classe livro.
  * Todas as outras classes, só devem manipular o LivroModel através da classe Livro.
  * @author Lucas

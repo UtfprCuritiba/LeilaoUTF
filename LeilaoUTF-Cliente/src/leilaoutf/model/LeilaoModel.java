@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package leilaoutf.model;
 
 import java.time.LocalDate;
 import leilaoutf.rn.Livro;
 
 /**
+ * Classe de LeilaoModel.
  * Atenção: Essa classe não deve ser acessada diretamente por outras classes, além da classe Leilao.
  * Todas as outras classes, só podem manipular o LeilaoModel através da classe Leilao.
  * @author Lucas

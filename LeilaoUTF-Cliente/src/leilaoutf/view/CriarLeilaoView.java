@@ -198,12 +198,12 @@ public class CriarLeilaoView extends javax.swing.JFrame {
             }catch(Exception e){
                 System.out.println("Exception:" + e);
             }
+            this.setVisible(false);
+            this.dispose();
             Leilao leilao = new Leilao();
             leilao.criarLeilao(codigo, nome, descricao, preco, expiracaoLeilao);
             Cliente cliente = new Cliente();
             cliente.novoLeilao(leilao);
-            this.setVisible(false);
-            this.dispose();
         }
     }//GEN-LAST:event_criarLeilaoActionPerformed
 

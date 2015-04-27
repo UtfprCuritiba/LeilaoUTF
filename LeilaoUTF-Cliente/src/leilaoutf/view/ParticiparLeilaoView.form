@@ -89,6 +89,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Participar do leil&#xe3;o"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="participarLeilaoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

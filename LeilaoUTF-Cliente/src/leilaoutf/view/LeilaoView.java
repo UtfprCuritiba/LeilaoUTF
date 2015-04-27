@@ -5,6 +5,8 @@
  */
 package leilaoutf.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Lucas
@@ -161,7 +163,24 @@ public class LeilaoView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void enviarLanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarLanceActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        this.dispose();
+        String msg1 = "Lamentamos o transtorno, não foi possível enviar novo lance.";
+        JOptionPane.showMessageDialog(null, msg1);
+        String msg2 = "Provavelmente o desenvolvedor se encheu disso.";
+        JOptionPane.showMessageDialog(null, msg2);
+        String msg3 = "Ou não teve tempo de terminar as conexões com o servidor.";
+        JOptionPane.showMessageDialog(null, msg3);
+        String msg4 = "É, foi a última opção... e um pouco da primeira talvez.";
+        JOptionPane.showMessageDialog(null, msg4);
+        String msg5 = "Não é fácil programar estando doente sabia?";
+        JOptionPane.showMessageDialog(null, msg5);
+        String msg6 = "Okay, agora te deixarei em paz. Falow!";
+        JOptionPane.showMessageDialog(null, msg6);
+        String msg7 = "Rá! Pegadinha do malandro!";
+        JOptionPane.showMessageDialog(null, msg7);
+        String msg8 = "Okay, agora é sério, tenho mais a fazer do que ficar aqui. Até mais! (:";
+        JOptionPane.showMessageDialog(null, msg8);
     }//GEN-LAST:event_enviarLanceActionPerformed
 
     /**

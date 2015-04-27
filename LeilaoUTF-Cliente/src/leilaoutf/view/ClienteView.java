@@ -120,10 +120,10 @@ public class ClienteView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        String msg = "Obrigado por usar nosso sistema. Desenvolvido por: @lucasmelocvl e @maykooliver.";
-        JOptionPane.showMessageDialog(null, msg);
         this.setVisible(false);
         this.dispose();
+        String msg = "Obrigado por usar nosso sistema. Desenvolvido por: @lucasmelocvl e @maykooliver.";
+        JOptionPane.showMessageDialog(null, msg);
     }//GEN-LAST:event_sairActionPerformed
 
     private void participarLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarLeilaoActionPerformed

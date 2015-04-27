@@ -5,59 +5,47 @@
  */
 package leilaoutf.cliente;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.net.SocketException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import leilaoutf.rn.Cliente;
+import leilaoutf.rn.Decisao;
 import leilaoutf.rn.Servidor;
 
 /**
- *
- * @author a1305093
+ * O endereço de grupo multicast será: 237.236.35.34
+ * Porta: 5757
+ * @author lucasmelocvl
  */
 public class LeilaoUTFCliente {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws InterruptedException {
-        // TODO code application logic here
-        System.out.println("Olá mundo");
-        
-        //Inicia o multicast
+
         InetAddress group = null;
-        MulticastSocket s = null;
-        try {
-            group = InetAddress.getByName("224.0.0.2");
-            s = new MulticastSocket(6789);
-            s.joinGroup(group);
-        } catch (SocketException e) {
-            System.out.println("Socket: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IO: " + e.getMessage());
+        MulticastSocket multicastSock = null;
+        
+        //Recebe o endereço, a porta e participa do grupo.
+        try{
+            group = InetAddress.getByName("237.236.35.34");
+            multicastSock = new MulticastSocket(5757);
+            multicastSock.joinGroup(group);
+        }catch(Exception e){
+            e.printStackTrace();
         }
         
-        //Envia mensagem
-        Servidor serv = new Servidor(s, group);
+        //Classe de Servidor - Está aqui apenas para testes.
+        //Quem deve acioná-la é a classe de Decisão.
+        Servidor serv = new Servidor(group, multicastSock);
         Thread servThread = new Thread(serv);
         servThread.start();
-        servThread.sleep(3 * 1000);
         
-        //Recebe mensagem
-        byte[] buffer = new byte[1000];
-        for(int i=0; i< 3;i++) {		// get messages from others in group
-            DatagramPacket messageIn = new DatagramPacket(buffer, buffer.length);
-            try {
-                s.receive(messageIn);
-            } catch (IOException ex) {
-                Logger.getLogger(LeilaoUTFCliente.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("Received: " + new String(messageIn.getData()));
-        }
         
+        //Classe de decisões
+        Decisao dec = new Decisao(group, multicastSock);
+        Thread decThread = new Thread(dec);
+        decThread.start();
+        
+        //Classe de Cliente
+        Cliente cli = new Cliente();
 
     }
 

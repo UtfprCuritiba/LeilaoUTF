@@ -43,6 +43,11 @@ public class ParticiparLeilaoView extends javax.swing.JFrame {
         listaLeiloes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Leilão 01 <carregar pelo server>", "Leilão 02 <carregar pelo server>", "Leilão 03 <carregar pelo server>", "Leilão 04 <carregar pelo server>", "Leilão 05 <carregar pelo server>" }));
 
         participarLeilao.setText("Participar do leilão");
+        participarLeilao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                participarLeilaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,6 +82,12 @@ public class ParticiparLeilaoView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void participarLeilaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_participarLeilaoActionPerformed
+        this.setVisible(false);
+        this.dispose();
+        new LeilaoView().setVisible(true);
+    }//GEN-LAST:event_participarLeilaoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -5,18 +5,24 @@
  */
 package leilaoutf.view;
 
-import leilaoutf.rn.MapLeilao;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import leilaoutf.rn.Servidor;
 
 /**
  *
  * @author Mayko
  */
 public class ServidorView extends javax.swing.JFrame {
+       
+    static Servidor serv;
     
     /**
      * Creates new form Servidor
      */
-    public ServidorView() {
+    public ServidorView(Servidor s){
+        serv = s;
         initComponents();
     }
 
@@ -140,7 +146,9 @@ public class ServidorView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void desligaServActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_desligaServActionPerformed
-        // TODO add your handling code here:
+        serv.desativarServidor();
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_desligaServActionPerformed
 
     /**
@@ -174,7 +182,7 @@ public class ServidorView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ServidorView().setVisible(true);
+                new ServidorView(serv).setVisible(true);
             }
         });
     }

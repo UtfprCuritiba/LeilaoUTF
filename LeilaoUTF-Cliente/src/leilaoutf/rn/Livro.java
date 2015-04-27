@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package leilaoutf.rn;
 
 import leilaoutf.model.LivroModel;
 
 /**
- *
+ * Classe de Livro.
+ * Classe responsável por manipular um livro.
  * @author Lucas
  */
 public class Livro {
@@ -19,6 +15,11 @@ public class Livro {
         this.livro = new LivroModel(codigo, nome, descricao);
     }
     
+    /**
+     * Get Livro.
+     * Recupera um livro.
+     * @return Livro livro.
+     */
     public LivroModel getLivro(){
         return livro;
     }
