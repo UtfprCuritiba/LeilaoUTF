@@ -34,7 +34,7 @@ public class LeilaoModel {
     /**
      * @return the livro
      */
-    public Livro getCodlivro() {
+    public Livro getLivro() {
         return livro;
     }
 

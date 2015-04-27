@@ -1,5 +1,6 @@
 package leilaoutf.rn;
 
+import java.time.LocalDate;
 import leilaoutf.view.ClienteView;
 
 /**
@@ -9,41 +10,27 @@ import leilaoutf.view.ClienteView;
  */
 public class Cliente{
     
+    static long identificador;
+    
     public Cliente(){
         //Inicia a interface gráfica
         new ClienteView().setVisible(true);
+        identificador = System.currentTimeMillis();
     }
     
     /**
      * Novo Leilão.
-     * Esta função deve serializar o objeto leilão e enviar ao servidor, notificando
-     * que deseja realizar uma nova eleição.
+     * Esta função deve enviar o novo leilão ao servidor.
      * @param leilao 
      */
     public void novoLeilao(Leilao leilao){
+        String codigoLivro = leilao.leilao.getLivro().livro.getCodigo();
+        String nomeLivro = leilao.leilao.getLivro().livro.getNome(); 
+        String descricaoLivro = leilao.leilao.getLivro().livro.getDescricao(); 
+        Double precoInicial = leilao.leilao.getPrecoInicial(); 
+        LocalDate expiracaoLeilao = leilao.leilao.getTempoLimite();
         
-        //Serializa o objeto Leilao.  
-        /*try {
-            //Gera o arquivo para armazenar o objeto
-            FileOutputStream leilaoArq = new FileOutputStream("leilao.dat");
-            //Classe responsavel por inserir os objetos
-            ObjectOutputStream leilaoObj = new ObjectOutputStream(leilaoArq);
-            //Grava o objeto leilao no arquivo
-            leilaoObj.writeObject(leilao);
-            //Limpar memória
-            leilaoObj.flush();
-            //Fechar Stream.
-            leilaoObj.close();
-            //Limpar memória
-            leilaoArq.flush();
-            //Fechar Stream.
-            leilaoArq.close();
-            System.out.println("Leilão gravado com sucesso!");            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-        
-        //CODIGO DE ENVIO DO OBJETO SERIALIZADO PARA O SERVIDOR.
+        //CODIGO DE ENVIO DOS DADOS PARA O SERVIDOR.
         
     }
     

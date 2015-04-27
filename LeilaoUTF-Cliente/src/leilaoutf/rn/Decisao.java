@@ -44,6 +44,8 @@ public class Decisao implements Runnable{
                 //CODIGO PARA CASO A ESPERA DEMORE MAIS QUE 5SEG., SAIR DESSE TRY E DO-WHILE.
                 
                 multicastSock.receive(packet);
+                System.out.println("Socket Addres: " + packet.getSocketAddress());
+                
                 msg = new String(buffer);
                 System.out.println(msg);
                 

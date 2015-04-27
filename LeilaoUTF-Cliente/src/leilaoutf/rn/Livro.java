@@ -11,6 +11,10 @@ public class Livro {
     
     LivroModel livro;
     
+    public Livro(LivroModel l){
+        livro = l;
+    }
+    
     public Livro(String codigo, String nome, String descricao){
         this.livro = new LivroModel(codigo, nome, descricao);
     }

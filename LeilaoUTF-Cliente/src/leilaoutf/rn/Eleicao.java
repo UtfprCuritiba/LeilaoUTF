@@ -52,6 +52,7 @@ public class Eleicao {
      * @return 
      */
     public int enviarIdentificador(){
+        long id = Cliente.identificador;
         //CODIGO PARA ENVIO DO IDENTIFICADOR.
         return 1;
     }

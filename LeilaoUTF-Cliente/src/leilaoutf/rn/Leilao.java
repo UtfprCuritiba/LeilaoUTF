@@ -50,4 +50,13 @@ public class Leilao implements Serializable {
         return false;
     }
     
+    /**
+     * Get Livro.
+     * Retorna o livro do leilão.
+     * @return Livro
+     */
+    public Livro getLivro(){
+        return this.leilao.getLivro();
+    }
+    
 }
