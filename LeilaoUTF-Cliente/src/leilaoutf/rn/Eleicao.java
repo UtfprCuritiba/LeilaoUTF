@@ -1,8 +1,12 @@
 package leilaoutf.rn;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import leilaoutf.util.MyNumber;
 
 /**
  * Eleição.
@@ -51,10 +55,17 @@ public class Eleicao {
      * para ser avaliado na eleição, para saber quem será o novo servidor.
      * @return 
      */
-    public int enviarIdentificador(){
+    public static void enviarIdentificador(){
         long id = Cliente.identificador;
-        //CODIGO PARA ENVIO DO IDENTIFICADOR.
-        return 1;
+        String m = MyNumber.parseString(id);
+        try {
+            InetAddress group = InetAddress.getByName("237.236.35.34");
+            MulticastSocket multicastSock = new MulticastSocket(5757);
+            DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), group, 5757);
+            multicastSock.send(messageOut);
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
