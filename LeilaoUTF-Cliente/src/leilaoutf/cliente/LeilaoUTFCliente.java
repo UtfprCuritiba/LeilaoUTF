@@ -44,7 +44,8 @@ public class LeilaoUTFCliente {
         Thread decThread = new Thread(dec);
         decThread.start();
         
-        //Classe de Cliente
+        //Classe de Cliente - Está aqui apenas para testes.
+        //Quem deve acioná-la é a classe de Decisão.
         Cliente cli = new Cliente();
 
     }

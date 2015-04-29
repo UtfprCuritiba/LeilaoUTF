@@ -18,6 +18,7 @@ public class Decisao implements Runnable{
     MulticastSocket multicastSock;
     byte[ ] buffer = new byte[1000];
     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+    int[ ] clientes = new int[5];
     
     public Decisao(InetAddress g, MulticastSocket m){
         try{
@@ -59,6 +60,14 @@ public class Decisao implements Runnable{
         System.out.println("O servidor não está ativo, iniciando nova eleição.");
         Eleicao.novaEleicao(group, multicastSock);  
 
+    }
+    
+    /**
+     * 
+     */
+    public void aguardaCliente(){
+        //VERIFICAR AQUI SE HÁ PORTA DE 6 CLIENTES REGISTRADO
+        //SE TIVER 6 CLIENTES
     }
     
 }
