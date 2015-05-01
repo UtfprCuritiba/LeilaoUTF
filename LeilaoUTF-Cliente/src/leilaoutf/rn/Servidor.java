@@ -7,6 +7,7 @@ import java.net.MulticastSocket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import leilaoutf.util.MyNumber;
 import leilaoutf.view.ServidorView;
 
 /**
@@ -61,10 +62,17 @@ public class Servidor implements Runnable{
      * Serializa o objeto leilão e envia para o interessado.
      * @return 
      */
-    public Leilao enviarInfoLeilao(){
-        Leilao leilao = new Leilao();
-        //CODIGO PARA SERIALIZAR A CLASSE LEILÃO.
-        return leilao;
+    public String[] enviarInfoLeilao(Leilao leilao){
+        String Novoleilao[] = null;
+        //Livro livro = leilao.getLivro();               
+                
+        Novoleilao [0] = leilao.getLivro().getLivro().getCodigo();
+        Novoleilao [1] = leilao.getLivro().getLivro().getNome();
+        Novoleilao [2] = leilao.getLivro().getLivro().getDescricao();
+        Novoleilao [3] = MyNumber.parseString(leilao.getLeilao().getPrecoInicial());
+        Novoleilao [4] = MyNumber.parseString(leilao.getLeilao().getPrecoFinal());
+        
+        return Novoleilao;
     }
     
     /**
@@ -74,6 +82,7 @@ public class Servidor implements Runnable{
      */
     public double notifNovoLance(){
         //CODIGO PARA ENVIO DO NOVO LANCE.
+        
         return 0.0;
     }
     
@@ -81,8 +90,10 @@ public class Servidor implements Runnable{
      * Registrar Interesse.
      * Registra o interesse em determinado leilão.
      */
-    public void regInteresse(){
+    public void regInteresse(String codigoLivro){
         //CODIGO PARA REGISTRAR O INTERESSE NO LEILÃO.
+        
+        
     }
     
     /**
@@ -125,5 +136,7 @@ public class Servidor implements Runnable{
     public void desativarServidor(){
         serverAtivo = false;
     }
+    
+    
     
 }
