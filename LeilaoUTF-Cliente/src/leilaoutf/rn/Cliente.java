@@ -1,5 +1,10 @@
 package leilaoutf.rn;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.time.LocalDate;
 import leilaoutf.view.ClienteView;
 
@@ -63,10 +68,38 @@ public class Cliente{
     }
     
     /**
-     * Função a definir.
+     * UDP Cliente.
+     * Função responsável por enviar os pacotes via UDP.
+     * Pode enviar novos leilões, lances e pedidos de finalizar leilão.
      */
     public void udpCliente(){
-        
+        //CÓDIGO DEVE SER MODIFICADO, ESTÁ EM ESTADO BRUTO!
+        DatagramSocket aSocket = null;
+        try {
+            //Envia pacote para o servidor.
+            aSocket = new DatagramSocket();
+            String m = "Hello world";
+            InetAddress aHost = InetAddress.getByName("127.0.0.1");
+            int serverPort = 6789;
+            DatagramPacket request
+                    = new DatagramPacket(m.getBytes(), m.length(), aHost, serverPort);
+            aSocket.send(request);
+            
+            //Espera resposta do servidor
+            byte[] buffer = new byte[1000];
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            aSocket.receive(reply);
+            System.out.println("Reply: " + new String(reply.getData()));
+            
+        } catch (SocketException e) {
+            System.out.println("Socket: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("IO: " + e.getMessage());
+        } finally {
+            if (aSocket != null) {
+                aSocket.close();
+            }
+        }
     }    
     
 }
