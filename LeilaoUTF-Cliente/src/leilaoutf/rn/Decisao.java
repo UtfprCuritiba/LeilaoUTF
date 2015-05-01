@@ -42,6 +42,7 @@ public class Decisao implements Runnable{
         //True apenas para testes, resultado deverá receber por multicast
         boolean servidorAtivo = true;   
         String msg;
+        //CHAMAR AGUARDA CLIENTE AQUI
         do{
             try{
                 System.out.println("Esperando resposta do servidor...");
@@ -58,8 +59,8 @@ public class Decisao implements Runnable{
             }
             
         }while(servidorAtivo);
-        
-        //Caso nenhuma mensagem seja recebida, é informado que server caiu e lança nova eleição.
+        //NOVA ELEICAO
+        //Caso nenhuma mensagem seja recebida, é informado que server caiu ou não exite e lança nova eleição.
         System.out.println("O servidor não está ativo, iniciando nova eleição.");
         Eleicao.novaEleicao(group, multicastSock);  
 
@@ -67,30 +68,32 @@ public class Decisao implements Runnable{
     
     /**
      * Aguarda Cliente.
-     * Aguarda receber o número das portas do cliente.
+     * Aguarda receber o número das portas de pelos meno 6 clientes.
      */
     public void aguardaCliente(){
-        //EM CONSTRUÇÃO
         String msg;
-        try{
-            System.out.println("Esperando resposta do servidor...");
-            //CODIGO PARA CASO A ESPERA DEMORE MAIS QUE 5SEG., SAIR DESSE TRY E DO-WHILE.
+        do{
+            try{
+                System.out.println("Esperando novos clientes entrarem...");
 
-            multicastSock.receive(packet);
-            System.out.println("Socket Addres: " + packet.getSocketAddress());
+                multicastSock.receive(packet);
+                System.out.println("Socket Addres: " + packet.getSocketAddress());
 
-            msg = new String(buffer);
-            System.out.println("Nova porta de cliente recebida: " + msg);
-            verificaCliente(msg);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Decisao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                msg = new String(buffer);
+                System.out.println("Nova porta de cliente recebida: " + msg);
+                verificaCliente(msg);
+
+            } catch (IOException ex) {
+                Logger.getLogger(Decisao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }while(!clientesProntos);
     }
     
     /**
      * Verifica Cliente.
      * Verifica se todos os clientes estão prontos e entraram no grupo.
+     * Para os clientes estarem prontos, é necessário que pelo menos 6 clientes estejam no grupo.
+     * @param porta
      */
     public void verificaCliente(String porta){
         int nClientes = 0;
@@ -104,10 +107,16 @@ public class Decisao implements Runnable{
         }
     }
 
+    /**
+     * @return the Server
+     */
     public static InetAddress getServer() {
         return Server;
     }
 
+    /**
+     * @return the ServerPort
+     */
     public static int getServerPort() {
         return ServerPort;
     }
