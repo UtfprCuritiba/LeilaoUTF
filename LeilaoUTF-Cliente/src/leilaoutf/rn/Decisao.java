@@ -16,9 +16,12 @@ public class Decisao implements Runnable{
     
     InetAddress group;
     MulticastSocket multicastSock;
+    InetAddress Server;
+    int ServerPort;
     byte[ ] buffer = new byte[1000];
     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-    int[ ] clientes = new int[5];
+    int[ ] clientes = new int[6];
+    boolean clientesProntos = false;
     
     public Decisao(InetAddress g, MulticastSocket m){
         try{
@@ -63,11 +66,41 @@ public class Decisao implements Runnable{
     }
     
     /**
-     * 
+     * Aguarda Cliente.
+     * Aguarda receber o número das portas do cliente.
      */
     public void aguardaCliente(){
-        //VERIFICAR AQUI SE HÁ PORTA DE 6 CLIENTES REGISTRADO
-        //SE TIVER 6 CLIENTES
+        //EM CONSTRUÇÃO
+        String msg;
+        try{
+            System.out.println("Esperando resposta do servidor...");
+            //CODIGO PARA CASO A ESPERA DEMORE MAIS QUE 5SEG., SAIR DESSE TRY E DO-WHILE.
+
+            multicastSock.receive(packet);
+            System.out.println("Socket Addres: " + packet.getSocketAddress());
+
+            msg = new String(buffer);
+            System.out.println("Nova porta de cliente recebida: " + msg);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Decisao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Verifica Cliente.
+     * Verifica se todos os clientes estão prontos e entraram no grupo.
+     */
+    public void verificaCliente(String porta){
+        int nClientes = 0;
+        for(int i=0; i < 6; i++){
+            if(clientes[i] > 0){
+                nClientes += 1;
+            }
+        }
+        if(nClientes == 6){
+            clientesProntos = true;
+        }
     }
     
 }
