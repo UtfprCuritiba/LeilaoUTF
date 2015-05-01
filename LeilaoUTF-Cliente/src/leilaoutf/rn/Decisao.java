@@ -14,10 +14,10 @@ import java.util.logging.Logger;
  */
 public class Decisao implements Runnable{
     
+    public static InetAddress Server;
+    public static int ServerPort;
     InetAddress group;
     MulticastSocket multicastSock;
-    InetAddress Server;
-    int ServerPort;
     byte[ ] buffer = new byte[1000];
     DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
     int[ ] clientes = new int[6];
@@ -81,6 +81,7 @@ public class Decisao implements Runnable{
 
             msg = new String(buffer);
             System.out.println("Nova porta de cliente recebida: " + msg);
+            verificaCliente(msg);
             
         } catch (IOException ex) {
             Logger.getLogger(Decisao.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,6 +102,14 @@ public class Decisao implements Runnable{
         if(nClientes == 6){
             clientesProntos = true;
         }
+    }
+
+    public static InetAddress getServer() {
+        return Server;
+    }
+
+    public static int getServerPort() {
+        return ServerPort;
     }
     
 }
