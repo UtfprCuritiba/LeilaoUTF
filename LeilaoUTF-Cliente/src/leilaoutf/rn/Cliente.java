@@ -43,8 +43,11 @@ public class Cliente{
      * Participar Leilão.
      * Essa função deve ser responsável por enviar ao server a requisição de participar de um leilão.
      */
-    public void participaLeilao(){
+    public void participaLeilao(Leilao leilao){
         //CODIGO DE ENVIO DE NOTIFICAÇÃO E PEDIDO DE PARTICIPAO DE UM LEILÃO.
+        leilao.getLivro().getLivro().getCodigo();
+        
+        
     }
     
     /**

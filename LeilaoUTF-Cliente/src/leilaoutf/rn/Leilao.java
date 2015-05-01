@@ -11,6 +11,16 @@ import leilaoutf.model.LeilaoModel;
 public class Leilao implements Serializable {
     
     LeilaoModel leilao;
+
+    public LeilaoModel getLeilao() {
+        return leilao;
+    }
+
+    public void setLeilao(LeilaoModel leilao) {
+        this.leilao = leilao;
+    }
+    
+    
     
     public Leilao(){
         super();
