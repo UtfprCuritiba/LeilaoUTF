@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import leilaoutf.view.ClienteView;
 
 /**
@@ -40,14 +42,46 @@ public class Cliente{
     }
     
     /**
+     * Enviar Servidor.
+     * Essa função recebe um Array String e envia ao servidor
+     */
+    public String enviaServidor(String str){
+        //CODIGO DE ENVIO DE NOTIFICAÇÃO E PEDIDO DE PARTICIPAO DE UM LEILÃO.
+        
+        try {
+            InetAddress servidor = Decisao.getServer(); 
+            int porta = Decisao.getServerPort();
+            DatagramPacket request = new DatagramPacket(str.getBytes(), str.length(), servidor, porta);
+            DatagramSocket aSocket;
+            aSocket = new DatagramSocket();
+            aSocket.send(request);
+            byte[] buffer = new byte[1000];
+            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            aSocket.receive(reply);
+            return new String(reply.getData());  
+        } catch (SocketException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;  
+    }
+    
+    /**
      * Participar Leilão.
      * Essa função deve ser responsável por enviar ao server a requisição de participar de um leilão.
      */
     public void participaLeilao(Leilao leilao){
         //CODIGO DE ENVIO DE NOTIFICAÇÃO E PEDIDO DE PARTICIPAO DE UM LEILÃO.
-        leilao.getLivro().getLivro().getCodigo();
-        
-        
+        String livro = leilao.getLivro().getLivro().getCodigo();
+        String[] recebeDadosLivro = new String [6];      
+        String recebeMensangem =  enviaServidor(livro);
+        int i = 0;
+        for(String auxiliar: recebeMensangem.split("-")){
+            
+            recebeDadosLivro[i]= auxiliar; 
+            i++;
+        }
     }
     
     /**

@@ -65,9 +65,9 @@ public class Servidor implements Runnable{
      * Serializa o objeto leilão e envia para o interessado.
      * @return 
      */
-    public String[] enviarInfoLeilao(Leilao leilao){
+    public void enviarInfoLeilao(Leilao leilao){
         String Novoleilao[] = null;
-        //Livro livro = leilao.getLivro();               
+        //Livro livro = leilao.getLivro();              
                 
         Novoleilao [0] = leilao.getLivro().getLivro().getCodigo();
         Novoleilao [1] = leilao.getLivro().getLivro().getNome();
@@ -75,7 +75,9 @@ public class Servidor implements Runnable{
         Novoleilao [3] = MyNumber.parseString(leilao.getLeilao().getPrecoInicial());
         Novoleilao [4] = MyNumber.parseString(leilao.getLeilao().getPrecoFinal());
         
-        return Novoleilao;
+        String Mensagem = ("novoLeilao" + '-' + Novoleilao[0] + '-' + Novoleilao[1] + '-' + Novoleilao[2] + '-' + Novoleilao[3] + '-' + Novoleilao[4]);
+        
+        //Deverá enviar para o servido via UDP
     }
     
     /**
