@@ -22,10 +22,31 @@ public class LeilaoModel {
         
     }
     
+    /**
+     * Informação de Leilão próprio.
+     * @param l
+     * @param preco
+     * @param date 
+     */
     public LeilaoModel(Livro l, double preco, LocalDate date){
         livro = l;
         precoInicial = preco;
         tempoLimite = date;
+        finalizado = false;
+        nomeVencedor = null;
+        precoFinal = 0;
+    }
+    
+    /**
+     * Informação de Leilões de terceiros.
+     * @param l
+     * @param preco
+     * @param precoFinal 
+     */
+    public LeilaoModel(Livro l, double preco, double precoFinal){
+        livro = l;
+        precoInicial = preco;
+        tempoLimite = null;
         finalizado = false;
         nomeVencedor = null;
         precoFinal = 0;

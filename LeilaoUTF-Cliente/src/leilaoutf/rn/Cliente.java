@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static leilaoutf.rn.Decisao.multicastSock;
 import leilaoutf.view.ClienteView;
 
 /**
@@ -15,14 +17,35 @@ import leilaoutf.view.ClienteView;
  * Classe com as ações pertinentes de cliente.
  * @author Lucas
  */
-public class Cliente{
+public class Cliente implements Runnable{
     
     static long identificador;
+    byte[ ] buffer;
+    DatagramPacket packet;
     
     public Cliente(){
         //Inicia a interface gráfica
         new ClienteView().setVisible(true);
         identificador = System.currentTimeMillis();
+    }
+    
+    @Override
+    /**
+     * Run.
+     * Ficará ouvindo novos clientes.
+     */
+    public void run() {
+        buffer = new byte[1000];
+        packet = new DatagramPacket(buffer, buffer.length);
+        try {
+            Decisao.multicastSock.receive(packet);
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String msg = new String(packet.getData());
+        if(msg.startsWith("novoCliente")){
+            Decisao.verificaCliente(msg.split(String.valueOf('-'))[1]);
+        }
     }
     
     /**
@@ -31,99 +54,86 @@ public class Cliente{
      * @param leilao 
      */
     public void novoLeilao(Leilao leilao){
+        String msg = "novoLeilao-";
         String codigoLivro = leilao.leilao.getLivro().livro.getCodigo();
         String nomeLivro = leilao.leilao.getLivro().livro.getNome(); 
         String descricaoLivro = leilao.leilao.getLivro().livro.getDescricao(); 
         Double precoInicial = leilao.leilao.getPrecoInicial(); 
         LocalDate expiracaoLeilao = leilao.leilao.getTempoLimite();
-        
-        //CODIGO DE ENVIO DOS DADOS PARA O SERVIDOR.
-        
-    }
-    
-    /**
-     * Enviar Servidor.
-     * Essa função recebe um Array String e envia ao servidor
-     */
-    public String enviaServidor(String str){
-        //CODIGO DE ENVIO DE NOTIFICAÇÃO E PEDIDO DE PARTICIPAO DE UM LEILÃO.
-        
-        try {
-            InetAddress servidor = Decisao.getServer(); 
-            int porta = Decisao.getServerPort();
-            DatagramPacket request = new DatagramPacket(str.getBytes(), str.length(), servidor, porta);
-            DatagramSocket aSocket;
-            aSocket = new DatagramSocket();
-            aSocket.send(request);
-            byte[] buffer = new byte[1000];
-            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
-            aSocket.receive(reply);
-            return new String(reply.getData());  
-        } catch (SocketException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;  
+        msg = msg + codigoLivro + nomeLivro + descricaoLivro + String.valueOf(precoInicial) + String.valueOf(expiracaoLeilao);
+        String result = udpCliente(msg);
+        System.out.println(result);
     }
     
     /**
      * Participar Leilão.
      * Essa função deve ser responsável por enviar ao server a requisição de participar de um leilão.
+     * @param codigo codigo do livro/leilao.
      */
-    public void participaLeilao(Leilao leilao){
-        //CODIGO DE ENVIO DE NOTIFICAÇÃO E PEDIDO DE PARTICIPAO DE UM LEILÃO.
-        String livro = leilao.getLivro().getLivro().getCodigo();
-        String[] recebeDadosLivro = new String [6];      
-        String recebeMensangem =  enviaServidor(livro);
-        int i = 0;
-        for(String auxiliar: recebeMensangem.split("-")){
-            
-            recebeDadosLivro[i]= auxiliar; 
-            i++;
-        }
+    public void participaLeilao(String codigo){
+        String msg = "participaLeilao-" + codigo;
+        String recebeDadosLivro = udpCliente(msg);
+        
+        Leilao leilao = new Leilao();
+        String codigoLivro = recebeDadosLivro.split(String.valueOf('-'))[1];
+        String nomeLivro = recebeDadosLivro.split(String.valueOf('-'))[2]; 
+        String descricaoLivro = recebeDadosLivro.split(String.valueOf('-'))[3]; 
+        Double precoInicial = Double.parseDouble(recebeDadosLivro.split(String.valueOf('-'))[4]);
+        Double ultimoLance = Double.parseDouble(recebeDadosLivro.split(String.valueOf('-'))[5]);
+        leilao.participaLeilao(codigoLivro, nomeLivro, descricaoLivro, precoInicial, ultimoLance);
+        //CHAMAR AQUI A TELA DE LEILÃO.
     }
     
     /**
      * Novo Lance.
      * Essa função deve enviar um novo lance ao servidor.
+     * @param codigo Código do livro.
+     * @param valorLance Valor do lance.
      */
-    public void novoLance(){
-        //CODIGO DE ENVIO DO LANCE AO SERVIDOR.
+    public void novoLance(String codigo, double valorLance){
+        String novoLance = codigo + String.valueOf(valorLance);
+        String msg = "novoLance-" + novoLance;
+        String result = udpCliente(msg);
+        System.out.println(result);
     }
     
     /**
      * Finalizar leilão.
      * Essa função deve enviar ao servidor o comando de finalizar um leilão.
      * Apenas o criador do respectivo leilão deverá finalizá-lo.
+     * @param codigo
      */
-    public void finalizarLeilao(){
-        //CODIGO DE FINALIZAÇÃO DO LEILÃO.
+    public void finalizarLeilao(String codigo){
+        String msg = "finalizarLeilao-" + codigo;
+        String result = udpCliente(msg);
+        System.out.println(result);
     }
     
     /**
      * UDP Cliente.
      * Função responsável por enviar os pacotes via UDP.
      * Pode enviar novos leilões, lances e pedidos de finalizar leilão.
+     * @param msg Mensagem a ser enviada para o servidor.
+     * @return Resposta do servidor.
      */
-    public void udpCliente(){
-        //CÓDIGO DEVE SER MODIFICADO, ESTÁ EM ESTADO BRUTO!
+    public String udpCliente(String msg){
         DatagramSocket aSocket = null;
+        String respostaServer = null;
+        
         try {
+            
             //Envia pacote para o servidor.
             aSocket = new DatagramSocket();
-            String m = "Hello world";
-            InetAddress aHost = InetAddress.getByName("127.0.0.1");
-            int serverPort = 6789;
             DatagramPacket request
-                    = new DatagramPacket(m.getBytes(), m.length(), aHost, serverPort);
+                    = new DatagramPacket(msg.getBytes(), msg.length(), Decisao.Server, Decisao.ServerPort);
             aSocket.send(request);
             
             //Espera resposta do servidor
-            byte[] buffer = new byte[1000];
-            DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+            byte[] bf = new byte[1000];
+            DatagramPacket reply = new DatagramPacket(bf, bf.length);
             aSocket.receive(reply);
-            System.out.println("Reply: " + new String(reply.getData()));
+            respostaServer = new String(reply.getData());
+            System.out.println("Recebido do servidor: " + respostaServer);
             
         } catch (SocketException e) {
             System.out.println("Socket: " + e.getMessage());
@@ -134,6 +144,8 @@ public class Cliente{
                 aSocket.close();
             }
         }
-    }    
+        
+        return respostaServer;
+    }
     
 }

@@ -29,10 +29,10 @@ public class MyNumber {
 	public static int parseInt(Object valor) {
 		int retorno = 0;
 		try {
-			retorno = Integer.parseInt(valor.toString());
+                    retorno = Integer.parseInt(valor.toString());
 		} catch (Exception e) {
-			retorno = 0;
-//			System.out.println("Erro ao converter Int.");
+                    retorno = 0;
+//                  System.out.println("Erro ao converter Int.");
 		}
 		return retorno;
 	}

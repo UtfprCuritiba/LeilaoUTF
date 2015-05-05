@@ -34,9 +34,9 @@ public class LeilaoUTFCliente {
         
         //Classe de Servidor - Está aqui apenas para testes.
         //Quem deve acioná-la é a classe de Decisão.
-        Servidor serv = new Servidor(group, multicastSock);
-        Thread servThread = new Thread(serv);
-        servThread.start();
+        //Servidor serv = new Servidor(group, multicastSock);
+        //Thread servThread = new Thread(serv);
+        //servThread.start();
         
         
         //Classe de decisões
@@ -46,7 +46,7 @@ public class LeilaoUTFCliente {
         
         //Classe de Cliente - Está aqui apenas para testes.
         //Quem deve acioná-la é a classe de Decisão.
-        Cliente cli = new Cliente();
+        //Cliente cli = new Cliente();
 
     }
 

@@ -51,7 +51,7 @@ public class Servidor implements Runnable{
      * Informa que o servidor está ativo.
      */
     public void infoServerAtivo(){
-        String m = "Servidor ativo!";
+        String m = "serverAtivo";
         DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), group, 5757);
         try {
             s.send(messageOut);

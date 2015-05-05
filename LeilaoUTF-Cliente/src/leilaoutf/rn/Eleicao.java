@@ -24,7 +24,7 @@ public class Eleicao {
             group = g;
             multicastSock = m;
         }catch(Exception e){
-            e.printStackTrace();
+            e.getMessage();
         }
     }        
     
@@ -43,26 +43,31 @@ public class Eleicao {
         try{
             group = g;
             multicastSock = m;
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(Exception e){ 
+            e.getMessage(); 
         }
-        //CÓDIGO PARA NOVA ELEIÇÃO.
+        int maiorPorta = 0;
+        for(int i=0; i < 6; i++){
+            if(Decisao.clientes[i] > maiorPorta){
+                maiorPorta = Decisao.clientes[i];
+            }
+        }
+        notifNovoServer(maiorPorta);
     }
     
     /**
      * Enviar Identificador.
      * Quando uma nova eleição é lançada, esse função envia o seu identificador
      * para ser avaliado na eleição, para saber quem será o novo servidor.
-     * @return 
      */
     public static void enviarIdentificador(){
         long id = Cliente.identificador;
         String m = MyNumber.parseString(id);
         try {
-            InetAddress group = InetAddress.getByName("237.236.35.34");
-            MulticastSocket multicastSock = new MulticastSocket(5757);
-            DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), group, 5757);
-            multicastSock.send(messageOut);
+            InetAddress g = InetAddress.getByName("237.236.35.34");
+            MulticastSocket multiSock = new MulticastSocket(5757);
+            DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), g, 5757);
+            multiSock.send(messageOut);
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -72,9 +77,18 @@ public class Eleicao {
      * Notificar Novo Servidor.
      * Após novos servidor ser escolhido, é avisado a todo o grupo Multicast, 
      * quem é o novo servidor.
+     * @param porta Porta do novo servidor
      */
-    public void notifNovoServer(){
-        //CODIGO PARA ENVIO DA MENSAGEM DE NOVO SERVIDOR.
+    public static void notifNovoServer(int porta){
+        String m = ("novoServer-" + String.valueOf(porta));
+        try {
+            InetAddress g = InetAddress.getByName("237.236.35.34");
+            MulticastSocket multiSock = new MulticastSocket(5757);
+            DatagramPacket messageOut = new DatagramPacket(m.getBytes(), m.length(), g, 5757);
+            multiSock.send(messageOut);
+        } catch (IOException ex) {
+            Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

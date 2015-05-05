@@ -41,6 +41,12 @@ public class Leilao implements Serializable {
         System.out.println("Leilão criado com sucesso!");
     }
     
+    public void participaLeilao(String codigoLivro, String nomeLivro, String descricaoLivro, double precoInicial, double ultimoLance){
+        Livro livro = new Livro(codigoLivro, nomeLivro, descricaoLivro);
+        this.leilao = new LeilaoModel(livro, precoInicial, ultimoLance);
+        System.out.println("Participação de Leilão confirmada!");
+    }
+    
     /**
      * Novo Lance.
      * Essa função deve enviar um novo lance ao servidor.
