@@ -122,7 +122,7 @@ public class Decisao implements Runnable{
         
         //ERRO AQUII!! TRANSFORMAR PARA STRING
         System.out.println("verificaCliente: " + porta);
-        int portaCli = Integer.parseInt(porta);
+        int portaCli = Integer.parseInt(porta.trim());
         System.out.println("PosTrans: " + portaCli);
         //FIM DO ERRO
         
@@ -135,7 +135,7 @@ public class Decisao implements Runnable{
             }else if(clientes[i] == portaCli){
                 i = 7;
             }else{
-                clientes[i] = Integer.parseInt(porta);
+                clientes[i] = Integer.parseInt(porta.trim());
                 enviaPortaPropria();
             }
         }
